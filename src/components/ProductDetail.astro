@@ -1,15 +1,52 @@
 ---
-const { product } = Astro.props;
+const { product, relatedProducts = [] } = Astro.props;
 ---
 
-<div class="max-w-2xl mx-auto p-4">
-  <img
-    src={product.image}
-    alt={product.name}
-    class="w-full h-64 object-cover mb-4"
-  />
-  <h1 class="text-2xl font-bold mb-2">{product.name}</h1>
-  <p class="text-gray-600 mb-4">{product.description}</p>
-  <p class="text-xl font-semibold">${product.price}</p>
-  <p class="text-sm mt-2">Category: {product.category}</p>
-</div>
+<section class="product-detail">
+  <h1>{product.name}</h1>
+  <img src={product.image} alt={product.name} />
+  <p>{product.description}</p>
+  <p><strong>${product.price}</strong></p>
+  <p>Category: {product.category}</p>
+  <p>{product.inStock ? "In Stock" : "Out of Stock"}</p>
+</section>
+
+{
+  relatedProducts.length > 0 && (
+    <section class="related-products">
+      <h2>Related Products</h2>
+      <div class="grid">
+        {relatedProducts.map((related) => (
+          <a href={`/products/${related.slug}`} class="related-item">
+            <img src={related.image} alt={related.name} />
+            <h3>{related.name}</h3>
+            <p>${related.price}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .related-products {
+    margin-top: 2rem;
+  }
+  .related-products .grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .related-item {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  .related-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+</style>

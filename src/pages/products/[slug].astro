@@ -13,8 +13,13 @@ const product = products.find((p) => p.slug === slug);
 if (!product) {
   throw new Error("Product not found");
 }
+
+// Get related products (same category, excluding the current product)
+const relatedProducts = products
+  .filter((p) => p.category === product.category && p.slug !== product.slug)
+  .slice(0, 4); // Show up to 4 related items
 ---
 
 <BaseLayout title={product.name}>
-  <ProductDetail product={product} />
+  <ProductDetail product={product} relatedProducts={relatedProducts} />
 </BaseLayout>
