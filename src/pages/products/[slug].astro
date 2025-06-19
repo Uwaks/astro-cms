@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProductDetail from "../../components/ProductDetail.astro";
+import products from "../../data/products.json";
+
+export async function getStaticPaths() {
+  return products.map((product) => ({ params: { slug: product.slug } }));
+}
+
+const { slug } = Astro.params;
+const product = products.find((p) => p.slug === slug);
+
+if (!product) {
+  throw new Error("Product not found");
+}
+---
+
+<BaseLayout title={product.name}>
+  <ProductDetail product={product} />
+</BaseLayout>

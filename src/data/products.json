@@ -1,0 +1,12 @@
+[
+  {
+    "id": "001",
+    "name": "T-Shirt",
+    "slug": "t-shirt",
+    "description": "A comfy cotton t-shirt.",
+    "price": 19.99,
+    "category": "Clothing",
+    "image": "/images/tshirt.jpg",
+    "inStock": true
+  }
+]
